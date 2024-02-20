@@ -35,17 +35,24 @@ Golang programming consist of 3 endpoints, namely:
 
 ### Key Assumptions
 - To create disbursement we call external service (BANK or 3rd Party Payment Service Provider)
-- 
+- The service run in the internal network which can't be accessed publicly. And the authentication handled by API Gateway and Authentication service
 
 ### Out Of Scope
 - DLQ Handling and Retry Mechanism
 - Transaction Reconciliation
 - Unit Test and Integration Test (time constrain)
 - Customer notification
+- Authentication/Authorization
 
 ## Implementation Detail
 ### Sequence Diagram
+#### Disbursements
+![img.png](img.png)
+#### Bank Account Validation
+![img_2.png](img_2.png)
 ### Database Schema
+![img_1.png](img_1.png)
+
 ### Mock Service
 To mock external service (in this case bank service) I use mockapi.io with the following details 
 #### Account Validation
