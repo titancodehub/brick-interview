@@ -1,0 +1,11 @@
+BEGIN;
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE IF NOT EXISTS "merchants" (
+   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY ,
+   balance BIGINT,
+   created TIMESTAMP DEFAULT NOW(),
+   updated TIMESTAMP DEFAULT NOW()
+);
+
+COMMIT;

@@ -1,0 +1,3 @@
+BEGIN;
+INSERT INTO merchants (id, balance) VALUES ('5497936d-11df-403f-9fb8-331f8d62773e', 10000000);
+COMMIT;

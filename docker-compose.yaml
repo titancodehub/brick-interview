@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres-brick:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=brick
+      - POSTGRES_USER=brick
+      - POSTGRES_DB=brick
+  localstack: # LocalStack container
+    image: localstack/localstack:latest
+    ports:
+      - 4566:4566
+    # Our one-off task with AWS-CLI
+  create-resources:
+    restart: "no"
+    image: amazon/aws-cli:2.11.0
+    depends_on:
+      localstack:
+        condition: service_healthy
+    environment:
+      - AWS_DEFAULT_REGION=ap-southeast-1
+      - AWS_ACCESS_KEY_ID=x
+      - AWS_SECRET_ACCESS_KEY=x
+      - DEBUG=1
+    entrypoint: [ "sh", "-c" ]
+    command: [ "aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name pending-transaction" ]

@@ -1,0 +1,173 @@
+openapi: '3.0.0'
+info:
+  title: Open API Spec
+  version: 0.1.0
+paths:
+  /validate-bank-accounts:
+    get:
+      description: 'Validate bank account'
+      parameters:
+        - in: query
+          name: account_number
+          schema:
+            type: string
+            minLength: 3
+            maxLength: 10
+          required: true
+        - in: query
+          name: bank_code
+          schema:
+            type: string
+            enum:
+              - BRI
+              - BNI
+              - BCA
+              - MANDIRI
+          required: true
+      responses:
+        '200':
+          description: 'Success validate bank account'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BankAccount'
+        '404':
+          description: 'Bank account not found'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /disbursements:
+    post:
+      description: 'Disburse money to bank account'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - merchant_id
+                - amount
+                - account_number
+                - bank_code
+                - reference
+              type: object
+              properties:
+                merchant_id:
+                  type: string
+                  minLength: 3
+                  maxLength: 36
+                amount:
+                  type: integer
+                  minimum: 1
+                  maximum: 10000000
+                account_number:
+                  type: string
+                  minLength: 3
+                  maxLength: 10
+                bank_code:
+                  type: string
+                  enum:
+                    - BRI
+                    - BNI
+                    - BCA
+                    - MANDIRI
+                reference:
+                  type: string
+                  minLength: 3
+                  maxLength: 36
+      responses:
+        '200':
+          description: 'Success validate bank account'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Transaction'
+  /webhooks/disbursements:
+    post:
+      description: 'Receive notification from bank server'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              required:
+                - transaction_id
+                - status
+              type: object
+              properties:
+                transaction_id:
+                  type: string
+                status:
+                  type: string
+                  enum:
+                    - SUCCESS
+                    - FAILED
+      responses:
+        '200':
+          description: 'Success validate bank account'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    BankAccount:
+      required:
+        - account_number
+        - account_name
+      type: object
+      properties:
+        account_number:
+          type: string
+        account_name:
+          type: string
+        bank_code:
+          type: string
+    Transaction:
+      type: object
+      required:
+        - id
+        - merchant_id
+        - reference
+        - amount
+        - status
+        - type
+        - created
+        - updated
+      properties:
+        id:
+          type: string
+        merchant_id:
+          type: string
+        reference:
+          type: string
+        amount:
+          type: integer
+        status:
+          type: string
+        type:
+          type: string
+        metadata:
+          type: object
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+    WebhookResponse:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    ErrorResponse:
+      required:
+        - error
+      type: object
+      properties:
+        error:
+          type: string
