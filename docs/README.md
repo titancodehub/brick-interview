@@ -1,14 +1,9 @@
 ---
 title: Open API Spec v0.1.0
 language_tabs:
-  - shell: Shell
-  - http: HTTP
-  - javascript: JavaScript
-  - ruby: Ruby
-  - python: Python
-  - php: PHP
-  - java: Java
-  - go: Go
+  - shell: curl
+language_clients:
+  - shell: shell
 toc_footers: []
 includes: []
 search: true
@@ -26,6 +21,15 @@ headingLevel: 2
 <h1 id="open-api-spec-default">Default</h1>
 
 ## get__validate-bank-accounts
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X GET /validate-bank-accounts?account_number=string&bank_code=BRI \
+  -H 'Accept: application/json'
+
+```
 
 `GET /validate-bank-accounts`
 
@@ -71,6 +75,16 @@ This operation does not require authentication
 </aside>
 
 ## post__disbursements
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /disbursements \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+```
 
 `POST /disbursements`
 
@@ -137,6 +151,16 @@ This operation does not require authentication
 </aside>
 
 ## post__webhooks_disbursements
+
+> Code samples
+
+```shell
+# You can also use wget
+curl -X POST /webhooks/disbursements \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+
+```
 
 `POST /webhooks/disbursements`
 

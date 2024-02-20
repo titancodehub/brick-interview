@@ -96,12 +96,5 @@ example response:
 4. run web server ```./main start-rest-server```
 5. run worker ```./main start-worker```
 
-### Sending Request
-Request Example:
-```curl --location 'localhost:8080/disbursement' \
---header 'Content-Type: application/json' \
---data '{
-    "merchant_id": "5497936d-11df-403f-9fb8-331f8d62773e",
-    "amount": 100,
-    "reference": <your reference>
-}'```
+### Documentations
+[Read Documentation](./docs)
