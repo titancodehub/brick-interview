@@ -47,7 +47,7 @@ Golang programming consist of 3 endpoints, namely:
 ## Implementation Detail
 ### Sequence Diagram
 #### Disbursements
-![img.png](img.png)
+![img_3.png](img_3.png)
 #### Bank Account Validation
 ![img_2.png](img_2.png)
 ### Database Schema
